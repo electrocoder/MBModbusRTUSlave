@@ -65,34 +65,36 @@ void setup() {
 void loop() {
   modbus.update();
 }
+```
 
-
-Modbus Commands
+### Modbus Commands
 Turn LED ON: Send 01 06 00 05 00 01 [CRC] (writes 1 to register 5).
 
 Turn LED OFF: Send 01 06 00 05 00 00 [CRC] (writes 0 to register 5).
 
 Read Registers: Send 01 03 00 00 00 0A [CRC] (reads 10 registers starting from 0).
 
-Customization
+### Customization
 You can adjust settings at runtime:
 
+```cpp
 modbus.setSlaveAddress(0x02);        // Change slave address to 0x02
 modbus.setLedPin(12);                // Change LED pin to 12
 modbus.setLedRegisterIndex(7);       // Use register 7 for LED control
 modbus.setModbusBaudRate(115200);    // Change baud rate to 115200
+```
 
-Hardware Requirements
+## Hardware Requirements
 Any Arduino-compatible board with a serial interface (e.g., Uno, Mega, Nano).
 
 An LED connected to the specified pin (default: pin 13, onboard LED on most Arduino boards).
 
 A Modbus master device or software (e.g., Modbus Poll, QModMaster) for testing.
 
-Dependencies
+## Dependencies
 None (uses only the Arduino core library).
 
-Contributing
+## Contributing
 Contributions are welcome! Feel free to:
 Fork this repository.
 
@@ -100,13 +102,13 @@ Create a new branch for your feature or bug fix.
 
 Submit a pull request with a clear description of your changes.
 
-License
+## License
 This project is licensed under the MIT License. See the LICENSE file for details.
 Acknowledgments
 Developed with assistance from Grok, created by xAI.
 
 Inspired by the need for a simple Modbus RTU slave implementation on Arduino.
 
-Contact
+## Contact
 For questions or support, open an issue on this repository or reach out to [electrocoder@gmail.com (mailto:electrocoder@gmail.com)].
 
