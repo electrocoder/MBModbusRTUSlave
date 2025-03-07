@@ -1,3 +1,5 @@
+[![MBModbusRTUSlave](/docs/images/logo.png)](#readme)
+
 # MBModbusRTUSlave Arduino Library
 
 A simple and flexible Modbus RTU slave library for Arduino.
@@ -112,3 +114,8 @@ Inspired by the need for a simple Modbus RTU slave implementation on Arduino.
 ## Contact
 For questions or support, open an issue on this repository or reach out to [electrocoder@gmail.com (mailto:electrocoder@gmail.com)].
 
+## Image
+[![MBModbusRTUSlave](/docs/images/MBModbusRTUSlave.png)](#readme)
+
+## GIF
+[![MBModbusRTUSlave](/docs/images/MBModbusRTUSlave.gif)](#readme)
