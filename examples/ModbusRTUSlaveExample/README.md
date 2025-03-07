@@ -1,4 +1,4 @@
-# ModbusRTUSlave Arduino Library
+# MBModbusRTUSlave Arduino Library
 
 A simple and flexible Modbus RTU slave library for Arduino.
 

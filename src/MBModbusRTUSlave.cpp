@@ -1,7 +1,7 @@
 /*
- * ModbusRTUSlave.cpp - Implementation of the Modbus RTU Slave Library for Arduino
+ * MBModbusRTUSlave.cpp - Implementation of the Modbus RTU Slave Library for Arduino
  *
- * Description: This file implements the methods of the ModbusRTUSlave class.
+ * Description: This file implements the methods of the MBModbusRTUSlave class.
  *              It supports Modbus RTU protocol for register reading (0x03) and writing (0x06).
  *              Provides LED control and flexible baud rate adjustments.
  * Author: S.Mersin (electrocoder) <electrocoder@gmail.com> (Assisted by Grok)
@@ -13,9 +13,9 @@
  *       All registers except the LED register are updated with random values.
  */
 
-#include "ModbusRTUSlave.h"
+#include "MBModbusRTUSlave.h"
 
-ModbusRTUSlave::ModbusRTUSlave(uint8_t slaveAddress, uint8_t ledPin, uint8_t ledRegisterIndex, uint16_t registerCount) {
+MBModbusRTUSlave::MBModbusRTUSlave(uint8_t slaveAddress, uint8_t ledPin, uint8_t ledRegisterIndex, uint16_t registerCount) {
   _slaveAddress = slaveAddress;
   _ledPin = ledPin;
   _ledRegisterIndex = ledRegisterIndex;
@@ -34,7 +34,7 @@ ModbusRTUSlave::ModbusRTUSlave(uint8_t slaveAddress, uint8_t ledPin, uint8_t led
   }
 }
 
-void ModbusRTUSlave::begin(long baudRate) {
+void MBModbusRTUSlave::begin(long baudRate) {
   _baudRate = baudRate;
   pinMode(_ledPin, OUTPUT);
   digitalWrite(_ledPin, LOW);
@@ -43,7 +43,7 @@ void ModbusRTUSlave::begin(long baudRate) {
     ;
 }
 
-void ModbusRTUSlave::update() {
+void MBModbusRTUSlave::update() {
   // We assign random values to all registers except the LED register
   for (int i = 0; i < _registerCount; i++) {
     if (i != _ledRegisterIndex)
@@ -71,7 +71,7 @@ void ModbusRTUSlave::update() {
   digitalWrite(_ledPin, modbusRegisters[_ledRegisterIndex] == 1 ? HIGH : LOW);
 }
 
-void ModbusRTUSlave::processReadHoldingRegisters() {
+void MBModbusRTUSlave::processReadHoldingRegisters() {
   uint16_t startAddress = (requestBuffer[2] << 8) | requestBuffer[3];
   uint16_t registerCount = (requestBuffer[4] << 8) | requestBuffer[5];
 
@@ -92,7 +92,7 @@ void ModbusRTUSlave::processReadHoldingRegisters() {
   Serial.write(responseBuffer, 5 + registerCount * 2);
 }
 
-void ModbusRTUSlave::processWriteSingleRegister() {
+void MBModbusRTUSlave::processWriteSingleRegister() {
   uint16_t registerAddress = (requestBuffer[2] << 8) | requestBuffer[3];
   uint16_t registerValue = (requestBuffer[4] << 8) | requestBuffer[5];
 
@@ -109,7 +109,7 @@ void ModbusRTUSlave::processWriteSingleRegister() {
   Serial.write(responseBuffer, 8);
 }
 
-uint16_t ModbusRTUSlave::calculateCRC(uint8_t *buffer, uint8_t length) {
+uint16_t MBModbusRTUSlave::calculateCRC(uint8_t *buffer, uint8_t length) {
   uint16_t crc = 0xFFFF;
   for (uint8_t pos = 0; pos < length; pos++) {
     crc ^= (uint16_t)buffer[pos];
@@ -125,29 +125,29 @@ uint16_t ModbusRTUSlave::calculateCRC(uint8_t *buffer, uint8_t length) {
   return crc;
 }
 
-bool ModbusRTUSlave::checkCRC(uint8_t *buffer, uint8_t length) {
+bool MBModbusRTUSlave::checkCRC(uint8_t *buffer, uint8_t length) {
   uint16_t receivedCRC = (buffer[length + 1] << 8) | buffer[length];
   uint16_t calculatedCRC = calculateCRC(buffer, length);
   return (receivedCRC == calculatedCRC);
 }
 
 // Setter methods
-void ModbusRTUSlave::setSlaveAddress(uint8_t slaveAddress) {
+void MBModbusRTUSlave::setSlaveAddress(uint8_t slaveAddress) {
   _slaveAddress = slaveAddress;
 }
 
-void ModbusRTUSlave::setLedPin(uint8_t ledPin) {
+void MBModbusRTUSlave::setLedPin(uint8_t ledPin) {
   _ledPin = ledPin;
   pinMode(_ledPin, OUTPUT);
 }
 
-void ModbusRTUSlave::setLedRegisterIndex(uint8_t ledRegisterIndex) {
+void MBModbusRTUSlave::setLedRegisterIndex(uint8_t ledRegisterIndex) {
   if (ledRegisterIndex < _registerCount) {
     _ledRegisterIndex = ledRegisterIndex;
   }
 }
 
-void ModbusRTUSlave::setBaudRate(long baudRate) {
+void MBModbusRTUSlave::setBaudRate(long baudRate) {
   _baudRate = baudRate;
   Serial.begin(_baudRate, SERIAL_8N1);
 }

@@ -1,10 +1,10 @@
-# ModbusRTUSlave Arduino Library
+# MBModbusRTUSlave Arduino Library
 
 A simple and flexible Modbus RTU slave library for Arduino.
 
 ## Overview
 
-The `ModbusRTUSlave` library allows Arduino devices to function as Modbus RTU slaves over a serial connection. It supports reading and writing registers via Modbus function codes `0x03` (Read Holding Registers) and `0x06` (Write Single Register), with provisions for LED control based on a designated register value. The library is designed to be customizable, with configurable slave address, LED pin, LED register index, and baud rate.
+The `MBModbusRTUSlave` library allows Arduino devices to function as Modbus RTU slaves over a serial connection. It supports reading and writing registers via Modbus function codes `0x03` (Read Holding Registers) and `0x06` (Write Single Register), with provisions for LED control based on a designated register value. The library is designed to be customizable, with configurable slave address, LED pin, LED register index, and baud rate.
 
 ### Features
 - Supports Modbus RTU protocol (function codes `0x03` and `0x06`).
@@ -29,11 +29,11 @@ The `ModbusRTUSlave` library allows Arduino devices to function as Modbus RTU sl
 1. **Download the Repository**:
    - Clone this repository or download it as a ZIP file:
      ```bash
-     git clone https://github.com/electrocoder/ModbusRTUSlave.git
+     git clone https://github.com/electrocoder/MBModbusRTUSlave.git
      ```
 
 2. **Install to Arduino IDE**:
-   - Move the `ModbusRTUSlave` folder to your Arduino `libraries` directory:
+   - Move the `MBModbusRTUSlave` folder to your Arduino `libraries` directory:
      - Windows: `Documents/Arduino/libraries/`
      - macOS/Linux: `~/Documents/Arduino/libraries/`
    - Restart the Arduino IDE.
@@ -41,7 +41,7 @@ The `ModbusRTUSlave` library allows Arduino devices to function as Modbus RTU sl
 3. **Include in Your Sketch**:
    - Add the library to your sketch with:
      ```cpp
-     #include <ModbusRTUSlave.h>
+     #include <MBModbusRTUSlave.h>
      ```
 
 ---
@@ -52,10 +52,10 @@ The `ModbusRTUSlave` library allows Arduino devices to function as Modbus RTU sl
 This example initializes a Modbus slave with default settings and controls an LED based on register 5.
 
 ```cpp
-#include <ModbusRTUSlave.h>
+#include <MBModbusRTUSlave.h>
 
 long modbusBaudRate = 9600;  // Customizable baud rate
-ModbusRTUSlave modbus(0x01, 13, 5);  // Slave address: 0x01, LED pin: 13, LED register: 5
+MBModbusRTUSlave modbus(0x01, 13, 5);  // Slave address: 0x01, LED pin: 13, LED register: 5
 
 void setup() {
   modbus.begin(modbusBaudRate);

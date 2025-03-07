@@ -1,5 +1,5 @@
 /*
- * ModbusRTUSlave.h - Modbus RTU Slave Library for Arduino
+ * MBModbusRTUSlave.h - Modbus RTU Slave Library for Arduino
  *
  * Description: This library configures Arduino devices as Modbus RTU slaves.
  *              It supports LED control, register reading/writing, and flexible baud rate settings.
@@ -8,18 +8,18 @@
  * Version: 1.0.0
  * License: MIT License
  * 
- * Usage: The ModbusRTUSlave class is initialized with a slave address, LED pin, and LED register index.
+ * Usage: The MBModbusRTUSlave class is initialized with a slave address, LED pin, and LED register index.
  *        Baud rate can be set via the begin() method using a variable.
  */
 
-#ifndef ModbusRTUSlave_h
-#define ModbusRTUSlave_h
+#ifndef MBModbusRTUSlave_h
+#define MBModbusRTUSlave_h
 
 #include <Arduino.h>
 
-class ModbusRTUSlave {
+class MBModbusRTUSlave {
 public:
-  ModbusRTUSlave(uint8_t slaveAddress = 0x01, uint8_t ledPin = 13, uint8_t ledRegisterIndex = 0, uint16_t registerCount = 10); // Constructor
+  MBModbusRTUSlave(uint8_t slaveAddress = 0x01, uint8_t ledPin = 13, uint8_t ledRegisterIndex = 0, uint16_t registerCount = 10); // Constructor
   void begin(long baudRate = 9600);  // Setup function
   void update();                     // Loop function
 
