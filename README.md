@@ -17,6 +17,7 @@ The `MBModbusRTUSlave` library allows Arduino devices to function as Modbus RTU 
 
 ### Version
 - **1.0.0** (Released: March 07, 2025)
+- **1.1.0** (Released: April 08, 2025)
 
 ### Author
 - S.Mersin (electrocoder) <electrocoder@gmail.com> (Assisted by Grok)
@@ -50,23 +51,62 @@ The `MBModbusRTUSlave` library allows Arduino devices to function as Modbus RTU 
 
 ## Usage
 
+- Define the register count in your Arduino code:
+
 ### Basic Example
-This example initializes a Modbus slave with default settings and controls an LED based on register 5.
+This example initializes a Modbus slave with default settings and controls.
 
 ```cpp
 #include <MBModbusRTUSlave.h>
 
-long modbusBaudRate = 9600;  // Customizable baud rate
-MBModbusRTUSlave modbus(0x01, 13, 5);  // Slave address: 0x01, LED pin: 13, LED register: 5
+#define RXD2 16 // ESP32 Serial2
+#define TXD2 17 // ESP32 Serial2
+
+long mymodbusBaudRate = 9600;  // Customizable baud rate
+const uint16_t myRegisterCount = 20;
+MBModbusRTUSlave modbus(0x01, &Serial2, 26, myRegisterCount);  // Slave address: 0x01, Serial port name: Serial2, RS485 Module Pin: 26, Register count: 10
+
+unsigned long previousMillis = 0;
+const long interval = 1000; 
 
 void setup() {
-  modbus.begin(modbusBaudRate);
+
+  Serial.begin(9600); // DEBUG message
+
+  Serial2.begin(9600, SERIAL_8N2, RXD2, TXD2);
+  pinMode(26, OUTPUT);
+
+  modbus.begin(mymodbusBaudRate);
   Serial.println("Modbus started");
+
 }
 
 void loop() {
-  modbus.update();
+
+  unsigned long currentMillis = millis();
+  if (currentMillis - previousMillis >= interval) {
+
+    previousMillis = currentMillis;
+
+  modbus.writeFloatRegister(0, 123.45);   // Float method
+  modbus.writeRegister(2, 66);  // Uint16_t method
+
+  }
+
+    // Read Register
+  if (modbus.readRegisters()) {
+    Serial.println("Modbus to read");
+  }
+
+  // Read Float and Integer Register
+  Serial.print(modbus.getFloatRegister(0));
+  Serial.print(" ");
+  Serial.print(modbus.getRegister(2));
+  Serial.println("");
+
+  delay(10);
 }
+
 ```
 
 ### Modbus Commands
