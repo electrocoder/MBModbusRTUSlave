@@ -1,35 +1,32 @@
 /*
- * MBModbusRTUSlaveExample.ino - Example Sketch for MBModbusRTUSlave Library
+ * MBModbusRTUSlaveExampleESP32.ino - Example Sketch for MBModbusRTUSlave Library
  *
- * Description: This sketch Arduino Uno with RS485 Module and Serial2 Modbus write and read configure
+ * Description: This sketch ESP32 with RS485 Module and Serial2 Modbus write and read configure
  * Author: S.Mersin (electrocoder) <electrocoder@gmail.com> (Assisted by Grok)
  * Date: April 08, 2025
  * Version: 1.1.0
  * License: MIT License
  *
  * Hardware:
- *  - Arduino Uno
+ *  - ESP32 Nodemcu
  *
  * Dependencies:
  *  - MBModbusRTUSlave library (version 1.1.0 or higher)
  *
  * Usage:
- *  - Upload this sketch to your Arduino Uno Board.
+ *  - Upload this sketch to your ESP32 DEv Board.
  *  - Use a Modbus master (e.g., Modbus Poll) to send commands:
  *    - Write 1 to register 5: "01 06 00 05 00 01 [CRC]" (turns LED ON)
  *    - Write 0 to register 5: "01 06 00 05 00 00 [CRC]" (turns LED OFF)
  */
 
 #include "MBModbusRTUSlave.h"
-#include <SoftwareSerial.h>
 
-#define RXD2 4 // Arduino Uno SoftwareSerial
-#define TXD2 5 // Arduino Uno SoftwareSerial
+#define RXD2 16 // ESP32 Serial2
+#define TXD2 17 // ESP32 Serial2
 
 #define REGISTER_COUNT 20
 #define rs485_select_pin 26
-
-SoftwareSerial Serial2(RXD2, TXD2);
 
 long myModbusBaudRate = 9600;
 MBModbusRTUSlave modbus(0x02, &Serial2, rs485_select_pin, REGISTER_COUNT);
@@ -79,5 +76,5 @@ void loop()
 
   Serial.println(" ");
 
-  delay(100);
+  delay(100);  
 }
